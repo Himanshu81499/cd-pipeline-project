@@ -15,6 +15,7 @@ jobs:
 
       - name: Prepare deployment
         run: |
+          mkdir -p deployed
           rm -rf deployed/*
           cp app/index.html deployed/index.html
 
