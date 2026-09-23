@@ -1,0 +1,32 @@
+name: Continuous Deployment
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Prepare deployment
+        run: |
+          rm -rf deployed/*
+          cp app/index.html deployed/index.html
+
+      - name: Verify deployment
+        run: |
+          test -f deployed/index.html
+          echo "Deployment successful!"
+          cat deployed/index.html
+
+      - name: Create deployment package
+        uses: actions/upload-artifact@v4
+        with:
+          name: deployed-application
+          path: deployed/
+
